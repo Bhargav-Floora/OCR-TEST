@@ -89,8 +89,8 @@ export default function UploadSection({ onFileSelect, isAnalyzing }: UploadSecti
                                     <Loader2 className="w-16 h-16 text-violet-400 animate-spin relative z-10" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-medium text-white mb-1">Analyzing Document...</h3>
-                                    <p className="text-sm text-white/50">Using GPT-4o Vision to extract details</p>
+                                    <h3 className="text-xl font-medium text-white mb-1">Running OCR Pipeline...</h3>
+                                    <p className="text-sm text-white/50">Multi-stage extraction with vector + vision analysis</p>
                                 </div>
                             </motion.div>
                         ) : (
@@ -127,11 +127,15 @@ export default function UploadSection({ onFileSelect, isAnalyzing }: UploadSecti
             >
                 <div className="flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-                    <span>Secure Analysis</span>
+                    <span>Vector Extraction</span>
                 </div>
                 <div className="flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-                    <span>GPT-4o Powered</span>
+                    <span>Smart Region Detection</span>
+                </div>
+                <div className="flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                    <span>GPT-4o Vision</span>
                 </div>
             </motion.div>
         </div>

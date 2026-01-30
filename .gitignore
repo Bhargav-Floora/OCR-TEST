@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -30,7 +28,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 
 # vercel
@@ -39,3 +37,37 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python
+/venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Sensitive files - NEVER commit these
+service-account-key.json
+checkkey.json
+*.key.json
+credentials.json
+
+# Test/debug files
+dummy.pdf
+test_drawing.pdf
+debug_tile_output.pdf
+debug_tiles/
+create_test_pdf.py
+=2.20.0
+
+# Test/debug scripts (only ocr_pipeline.py is needed)
+scripts/test_*
+scripts/test-*
+scripts/check*
+scripts/list-*
+scripts/verify-*
+scripts/debug_*
+scripts/find_*
+scripts/analyze_*
+scripts/__pycache__/
+
+# OS files
+Thumbs.db

@@ -7,16 +7,48 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type AppState = "idle" | "analyzing" | "chat";
 
+interface PipelineResult {
+  document_type: string;
+  total_pages: number;
+  processing_time_seconds: number;
+  python_extraction?: {
+    pages: Array<{
+      page_num: number;
+      pymupdf_text: string;
+      pymupdf_blocks: any[];
+      pdfplumber_text: string;
+      pdfplumber_words: any[];
+      pdfminer_text: string;
+      pdfminer_elements: any[];
+      tables: any[];
+      drawings_count: number;
+    }>;
+  };
+  ocr_extraction?: {
+    pages: Array<{
+      page_num: number;
+      markdown_text: string;
+    }>;
+    error?: string;
+  };
+  docai_extraction?: {
+    pages: Array<{
+      page_num: number;
+      text: string;
+      tables: any[];
+    }>;
+    error?: string;
+  };
+}
+
 export default function Home() {
   const [appState, setAppState] = useState<AppState>("idle");
   const [summary, setSummary] = useState<string>("");
-  const [threadId, setThreadId] = useState<string>("");
-  const [assistantId, setAssistantId] = useState<string>("");
+  const [pipelineResult, setPipelineResult] = useState<PipelineResult | undefined>();
 
   const handleFileSelect = async (file: File) => {
     setAppState("analyzing");
 
-    // Create FormData
     const formData = new FormData();
     formData.append("file", file);
 
@@ -33,8 +65,7 @@ export default function Home() {
 
       const data = await res.json();
       setSummary(data.analysis);
-      setThreadId(data.threadId);
-      setAssistantId(data.assistantId);
+      setPipelineResult(data.pipelineResult);
       setAppState("chat");
     } catch (error) {
       console.error(error);
@@ -46,8 +77,7 @@ export default function Home() {
   const handleBack = () => {
     setAppState("idle");
     setSummary("");
-    setThreadId("");
-    setAssistantId("");
+    setPipelineResult(undefined);
   };
 
   return (
@@ -76,9 +106,8 @@ export default function Home() {
           >
             <ChatInterface
               summary={summary}
-              threadId={threadId}
-              assistantId={assistantId}
               onBack={handleBack}
+              pipelineResult={pipelineResult}
             />
           </motion.div>
         )}
